@@ -12,4 +12,4 @@ git clone ~~~
 
 - [ ] Set Nickname
 - [ ] Customize Nickname Color
-- [ ] Chat Each Other!
+- [x] Chat Each Other!
