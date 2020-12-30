@@ -1,37 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
-import { io } from 'socket.io-client';
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
+import ChatRoom from './components/ChatRoom';
+import SocketProvider from './socket/SocketProvider';
 
-const socket = io('http://localhost:4000');
+const GlobalStyle = createGlobalStyle`
+  ${reset};
+
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  #root {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 function App() {
-  const [value, setValue] = useState<string>('');
-  const chatRef = useRef<HTMLUListElement>(null);
-
-  useEffect(() => {
-    socket.on('chat message', (msg: string) => {
-      const chat = document.createElement('li');
-      chat.innerText = msg;
-      chatRef.current?.appendChild(chat);
-    });
-  }, []);
-
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    socket.emit('chat message', value);
-    setValue('');
-  };
-
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-
   return (
-    <main>
-      <ul ref={chatRef} style={{ listStyle: 'none' }}></ul>
-      <form onSubmit={onSubmit}>
-        <input type="text" value={value} onChange={onChange} />
-      </form>
-    </main>
+    <>
+      <GlobalStyle />
+      <SocketProvider>
+        <ChatRoom />
+      </SocketProvider>
+    </>
   );
 }
 
