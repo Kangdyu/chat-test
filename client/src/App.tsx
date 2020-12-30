@@ -1,6 +1,7 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import ChatRoom from './components/ChatRoom';
+import ChatRoom from './chat/ChatRoom';
+import Lobby from './lobby/Lobby';
 import SocketProvider from './socket/SocketProvider';
 
 const GlobalStyle = createGlobalStyle`
@@ -8,6 +9,11 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+  }
+
+  html {
+    font-size: 10px;
+    font-family: 'Nunito', sans-serif;
   }
   
   body {
@@ -21,14 +27,30 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(128, 248, 174, 1) 0%,
+    rgba(223, 244, 148, 1) 90%
+  );
+`;
+
 function App() {
   return (
-    <>
+    <SocketProvider>
       <GlobalStyle />
-      <SocketProvider>
-        <ChatRoom />
-      </SocketProvider>
-    </>
+      <Container>
+        <Lobby />
+        {/* <ChatRoom /> */}
+      </Container>
+    </SocketProvider>
   );
 }
 
