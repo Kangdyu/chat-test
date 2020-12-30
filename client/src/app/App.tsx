@@ -1,8 +1,9 @@
+import { Provider } from 'react-redux';
 import styled, { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import ChatRoom from './chat/ChatRoom';
-import Lobby from './lobby/Lobby';
-import SocketProvider from './socket/SocketProvider';
+import Lobby from '../lobby/Lobby';
+import SocketProvider from '../socket/SocketProvider';
+import store from './store';
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -44,13 +45,14 @@ const Container = styled.div`
 
 function App() {
   return (
-    <SocketProvider>
-      <GlobalStyle />
-      <Container>
-        <Lobby />
-        {/* <ChatRoom /> */}
-      </Container>
-    </SocketProvider>
+    <Provider store={store}>
+      <SocketProvider>
+        <GlobalStyle />
+        <Container>
+          <Lobby />
+        </Container>
+      </SocketProvider>
+    </Provider>
   );
 }
 

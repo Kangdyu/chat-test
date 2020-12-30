@@ -10,6 +10,6 @@ git clone ~~~
 
 ## Features
 
-- [ ] Set Nickname
+- [x] Set Nickname
 - [ ] Customize Nickname Color
 - [x] Chat Each Other!

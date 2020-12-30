@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { RootState } from '../app/store';
 import { useSocket } from '../socket/SocketProvider';
+import { IMessageBlob } from '../socket/types';
 
 const Container = styled.section`
   border: 1px solid black;
@@ -20,10 +23,15 @@ const Input = styled.input`
 function ChatForm() {
   const [value, setValue] = useState('');
   const socket = useSocket();
+  const id = useSelector((state: RootState) => state.user.id);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    socket.emit('chat message', value);
+    const message: IMessageBlob = {
+      senderId: id,
+      text: value,
+    };
+    socket.emit('chat/message', message);
     setValue('');
   };
 
