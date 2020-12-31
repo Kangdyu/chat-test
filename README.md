@@ -13,3 +13,4 @@ git clone ~~~
 - [x] Set Nickname
 - [ ] Customize Nickname Color
 - [x] Chat Each Other!
+- [x] Show People List in Chat

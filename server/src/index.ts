@@ -31,13 +31,20 @@ interface IUser {
   color: string;
 }
 
-let users = new Map<string, IUser>();
+interface IUsers {
+  [id: string]: IUser;
+}
+
+let users: IUsers = {};
 
 io.on('connection', (socket: Socket) => {
   console.log('a user connected: ', socket.id);
 
   socket.on('disconnect', () => {
     console.log('user disconnected', socket.id);
+    io.emit('chat/leave', users[socket.id]);
+    delete users[socket.id];
+    io.emit('chat/peopleList', users);
   });
 
   socket.on('user/nickname', (nickname: string) => {
@@ -47,13 +54,15 @@ io.on('connection', (socket: Socket) => {
       nickname,
       color: 'black',
     };
-    users.set(socket.id, newUser);
+    users[socket.id] = newUser;
     socket.emit('user/id', socket.id);
+    io.emit('chat/enter', newUser);
+    io.emit('chat/peopleList', users);
   });
 
   socket.on('chat/message', (blob: IMessageBlob) => {
     const { senderId, text } = blob;
-    const sender = users.get(senderId);
+    const sender = users[senderId];
     if (!sender) {
       console.error(`Cannot find sender id: ${senderId}`);
       return;

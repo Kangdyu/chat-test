@@ -1,12 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from './types';
 
-interface User {
-  id: string;
-  nickname: string;
-  color: string;
-}
-
-const initialState: User = {
+const initialState: IUser = {
   id: '',
   nickname: '',
   color: 'black',

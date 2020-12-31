@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useSocket } from '../socket/SocketProvider';
 import { IMessage } from '../socket/types';
+import { IUser } from '../user/types';
 
 const Container = styled.section`
   background-color: white;
@@ -16,6 +17,8 @@ function ChatList() {
   const [chatList, setChatList] = useState<IMessage[]>([]);
 
   useEffect(() => {
+    socket.on('chat/enter', (user: IUser) => {});
+    socket.on('chat/leave', (user: IUser) => {});
     socket.on('chat/message', (message: IMessage) => {
       setChatList((prev) => prev.concat(message));
     });
