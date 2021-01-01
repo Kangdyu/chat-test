@@ -15,14 +15,23 @@ const io = new Server(server, {
   },
 });
 
-interface IMessageBlob {
+interface IUserMessage {
   senderId: string;
   text: string;
 }
 
-interface IMessage extends IMessageBlob {
-  senderNickname: string;
-  senderColor: string;
+enum MessageType {
+  'Common',
+  'Alert',
+  'Whisper',
+}
+
+interface IMessage {
+  type: MessageType;
+  text: string;
+  senderId?: string;
+  senderNickname?: string;
+  senderColor?: string;
 }
 
 interface IUser {
@@ -60,7 +69,7 @@ io.on('connection', (socket: Socket) => {
     io.emit('chat/peopleList', users);
   });
 
-  socket.on('chat/message', (blob: IMessageBlob) => {
+  socket.on('chat/message', (blob: IUserMessage) => {
     const { senderId, text } = blob;
     const sender = users[senderId];
     if (!sender) {
@@ -71,10 +80,11 @@ io.on('connection', (socket: Socket) => {
     console.log(`${sender.nickname}(${senderId}): ${blob.text}`);
 
     const message: IMessage = {
+      type: MessageType.Common,
+      text,
       senderId,
       senderNickname: sender.nickname,
       senderColor: sender.color,
-      text,
     };
     io.emit('chat/message', message);
   });

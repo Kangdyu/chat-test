@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSocket } from '../socket/SocketProvider';
-import { IMessage } from '../socket/types';
+import { IMessage, MessageType } from '../socket/types';
 import { IUser } from '../user/types';
+import ChatListItem from './ChatListItem';
 
 const Container = styled.section`
   background-color: white;
@@ -11,14 +12,30 @@ const Container = styled.section`
   font-size: 2rem;
 `;
 
+const List = styled.ul`
+  list-style: none;
+  line-height: 1.5;
+`;
+
 function ChatList() {
   const socket = useSocket();
-  const chatRef = useRef<HTMLUListElement>(null);
   const [chatList, setChatList] = useState<IMessage[]>([]);
 
   useEffect(() => {
-    socket.on('chat/enter', (user: IUser) => {});
-    socket.on('chat/leave', (user: IUser) => {});
+    socket.on('chat/enter', (user: IUser) => {
+      const alertMessage: IMessage = {
+        type: MessageType.Alert,
+        text: `${user.nickname} has joined the room.`,
+      };
+      setChatList((prev) => prev.concat(alertMessage));
+    });
+    socket.on('chat/leave', (user: IUser) => {
+      const alertMessage: IMessage = {
+        type: MessageType.Alert,
+        text: `${user.nickname} has left the room.`,
+      };
+      setChatList((prev) => prev.concat(alertMessage));
+    });
     socket.on('chat/message', (message: IMessage) => {
       setChatList((prev) => prev.concat(message));
     });
@@ -26,13 +43,11 @@ function ChatList() {
 
   return (
     <Container>
-      <ul ref={chatRef} style={{ listStyle: 'none' }}>
+      <List>
         {chatList.map((chat, idx) => (
-          <li key={idx}>
-            {chat.senderNickname}: {chat.text}
-          </li>
+          <ChatListItem key={idx} message={chat} />
         ))}
-      </ul>
+      </List>
     </Container>
   );
 }

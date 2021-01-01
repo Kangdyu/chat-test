@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { RootState } from '../app/store';
 import { useSocket } from '../socket/SocketProvider';
-import { IMessageBlob } from '../socket/types';
+import { IUserMessage } from '../socket/types';
 
 const Container = styled.section`
   border: 1px solid black;
@@ -27,7 +27,7 @@ function ChatForm() {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const message: IMessageBlob = {
+    const message: IUserMessage = {
       senderId: id,
       text: value,
     };

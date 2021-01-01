@@ -1,9 +1,18 @@
-export interface IMessageBlob {
+export interface IUserMessage {
   senderId: string;
   text: string;
 }
 
-export interface IMessage extends IMessageBlob {
-  senderNickname: string;
-  senderColor: string;
+export enum MessageType {
+  'Common',
+  'Alert',
+  'Whisper',
+}
+
+export interface IMessage {
+  type: MessageType;
+  text: string;
+  senderId?: string;
+  senderNickname?: string;
+  senderColor?: string;
 }
