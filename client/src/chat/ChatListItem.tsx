@@ -1,11 +1,21 @@
 import styled from 'styled-components';
 import { IMessage, MessageType } from '../socket/types';
 
-const CommonMessage = styled.li``;
+const Message = styled.li`
+  margin-bottom: 10px;
+`;
 
-const AlertMessage = styled.li``;
+const CommonMessage = styled(Message)``;
 
-const WhisperMessage = styled.li``;
+const AlertMessage = styled(Message)`
+  text-align: center;
+  padding: 5px 0;
+  background-color: #aaa;
+  border-radius: 20px;
+  color: white;
+`;
+
+const WhisperMessage = styled(Message)``;
 
 type Props = {
   message: IMessage;

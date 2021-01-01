@@ -14,7 +14,6 @@ const Container = styled.section`
 
 const List = styled.ul`
   list-style: none;
-  line-height: 1.5;
 `;
 
 function ChatList() {

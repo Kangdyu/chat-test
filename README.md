@@ -4,8 +4,9 @@ Simple chat with React, Node, <span>Socket.io</span>
 
 ## Usage
 ```
-git clone ~~~
-... In Progress
+// in project's root directory
+npm run start:client  // port 3000
+npm run start:server  // port 4000
 ```
 
 ## Features
