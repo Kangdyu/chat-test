@@ -24,7 +24,7 @@ const Title = styled.h1`
 function NicknameModal() {
   return (
     <Container>
-      <Title>Enter Your Nickname</Title>
+      <Title>Simple Chat</Title>
       <NicknameForm />
     </Container>
   );

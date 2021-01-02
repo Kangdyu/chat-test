@@ -5,6 +5,10 @@ const Message = styled.li`
   margin-bottom: 10px;
 `;
 
+const Sender = styled.span<{ color: string }>`
+  color: ${({ color }) => color};
+`;
+
 const CommonMessage = styled(Message)``;
 
 const AlertMessage = styled(Message)`
@@ -26,7 +30,8 @@ function ChatListItem({ message }: Props) {
     <>
       {message.type === MessageType.Common && (
         <CommonMessage>
-          {message.senderNickname}: {message.text}
+          <Sender color={message.senderColor!}>{message.senderNickname}</Sender>
+          : {message.text}
         </CommonMessage>
       )}
       {message.type === MessageType.Alert && (

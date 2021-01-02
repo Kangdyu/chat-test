@@ -23,6 +23,6 @@ const userSlice = createSlice({
   },
 });
 
-const { actions, reducer: userReducer } = userSlice;
-export const { setId, setNickname, setNicknameColor } = actions;
+const { actions: userActions, reducer: userReducer } = userSlice;
+export { userActions };
 export default userReducer;

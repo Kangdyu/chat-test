@@ -56,12 +56,12 @@ io.on('connection', (socket: Socket) => {
     io.emit('chat/peopleList', users);
   });
 
-  socket.on('user/nickname', (nickname: string) => {
-    console.log(`Set nickname: ${socket.id}/${nickname}`);
+  socket.on('user/login', (nickname: string, color: string) => {
+    console.log(`Login: ${socket.id}/${nickname}:${color}`);
     const newUser: IUser = {
       id: socket.id,
       nickname,
-      color: 'black',
+      color,
     };
     users[socket.id] = newUser;
     socket.emit('user/id', socket.id);
